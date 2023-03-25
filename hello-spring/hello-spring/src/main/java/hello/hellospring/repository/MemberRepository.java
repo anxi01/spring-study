@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface MemberRepository {
 
+
     // Member 저장
     Member save(Member member);
 
