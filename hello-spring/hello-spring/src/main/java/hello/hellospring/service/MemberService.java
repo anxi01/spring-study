@@ -34,7 +34,8 @@ public class MemberService {  // class 이름에 ctrl + shift + t 하면 test코
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
         return member.getId();
-    }
+
+        }
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
                 .ifPresent(m -> {
