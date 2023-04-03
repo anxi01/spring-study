@@ -27,6 +27,9 @@ public class BoardEntity {
     @Column(length = 500)
     private String boardContents;
 
+    @Column
+    private int boardHits;
+
     /** DTO 값을 Entity로 저장하는 메서드 */
     public static BoardEntity toSaveEntity(BoardDTO boardDTO){
         BoardEntity boardEntity = new BoardEntity();
@@ -35,6 +38,7 @@ public class BoardEntity {
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents((boardDTO.getBoardContents()));
+        boardEntity.setBoardHits(0);
         return boardEntity;
     }
 }
