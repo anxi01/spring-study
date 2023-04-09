@@ -12,7 +12,7 @@ import lombok.Setter;
 //@Table(name = "board_table")
 public class BoardEntity {
     @Id // pk 지정. 필수
-    @GeneratedValue // id값 증가
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
     @Column(length = 20, nullable = false) // 크기 20, not null

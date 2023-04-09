@@ -46,9 +46,8 @@ public class BoardService {
             BoardEntity boardEntity = optionalBoardEntity.get();
             BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
             return boardDTO;
-        }else{
-            return null;
         }
+        return null;
     }
 
 
