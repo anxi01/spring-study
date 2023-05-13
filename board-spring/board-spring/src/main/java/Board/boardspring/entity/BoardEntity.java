@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** DB의 테이블 역할을 하는 클래스 .. JPA에서 자주 사용 */
 @Entity
 @Getter
@@ -29,6 +32,9 @@ public class BoardEntity {
 
     @Column
     private int boardHits;
+
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     /** DTO 값을 Entity로 저장하는 메서드 */
     public static BoardEntity toSaveEntity(BoardDTO boardDTO){
