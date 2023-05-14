@@ -2,9 +2,7 @@ package Board.boardspring.controller;
 
 import Board.boardspring.common.ApiResponse;
 import Board.boardspring.dto.BoardDTO;
-import Board.boardspring.dto.CommentDTO;
 import Board.boardspring.service.BoardService;
-import Board.boardspring.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +16,8 @@ public class BoardApiController {
     // spring 특징 ioc, di, aop
 
     private final BoardService boardService; // Controller -> Service DI
-    private final CommentService commentService;
 
+    // GET localhost:8080/board-api
 
     // restful api 규칙을 통한 통신
     @GetMapping
@@ -32,18 +30,6 @@ public class BoardApiController {
     public ApiResponse<BoardDTO> save(@RequestBody BoardDTO boardDTO){
         boardService.save(boardDTO);
         return ApiResponse.ok(boardDTO);
-    }
-
-    @GetMapping
-    public ApiResponse<List<CommentDTO>> findAll(){
-        return ApiResponse.ok(commentService.findAll());
-    }
-
-    // restful api 규칙을 통한 통신
-    @PostMapping
-    public ApiResponse<CommentDTO> save(@RequestBody CommentDTO commentDTO){
-        commentService.save(commentDTO);
-        return ApiResponse.ok(commentDTO);
     }
 
 }

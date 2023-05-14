@@ -3,6 +3,8 @@ package Board.boardspring.repository;
 import Board.boardspring.entity.CommentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
+import java.util.List;
 
+public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
+    List<CommentEntity> findAllByBoardId(Long boardId);
 }

@@ -1,5 +1,6 @@
 package Board.boardspring.entity;
 
+import Board.boardspring.controller.request.CommentRequest;
 import Board.boardspring.dto.CommentDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,11 +28,14 @@ public class CommentEntity {
     @JoinColumn(name = "boardEntityiId")
     private BoardEntity boardEntity;
 
+    @Column(name = "boardEntityiId", insertable = false, updatable = false)
+    private Long boardId;
 
-    public static CommentEntity toSaveEntity(CommentDTO commentDTO, BoardEntity boardEntity) {
+
+    public static CommentEntity toSaveEntity(CommentRequest request, BoardEntity boardEntity) {
         CommentEntity commentEntity = new CommentEntity();
-        commentEntity.setCommentWriter(commentDTO.getCommentWriter());
-        commentEntity.setCommentContents(commentDTO.getCommentContents());
+        commentEntity.setCommentWriter(request.getCommentWriter());
+        commentEntity.setCommentContents(request.getCommentContents());
         commentEntity.setBoardEntity(boardEntity);
         return commentEntity;
     }

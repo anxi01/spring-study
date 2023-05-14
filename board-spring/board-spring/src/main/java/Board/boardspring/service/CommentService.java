@@ -1,5 +1,6 @@
 package Board.boardspring.service;
 
+import Board.boardspring.controller.request.CommentRequest;
 import Board.boardspring.dto.CommentDTO;
 import Board.boardspring.entity.BoardEntity;
 import Board.boardspring.entity.CommentEntity;
@@ -8,6 +9,8 @@ import Board.boardspring.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,12 +19,18 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
-    public void save(CommentDTO commentDTO) {
+
+    public List<CommentDTO> findAll(Long boardId) {
+        final List<CommentEntity> list = commentRepository.findAllByBoardId(boardId);
+        return CommentDTO.fromList(list);
+    }
+
+    public void save(CommentRequest request) {
         // 게시물 번호와 댓글이 달린 게시물의 번호가 같을 때 저장한다.
-        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(commentDTO.getId());
+        final Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(request.getBoardId());
         if(optionalBoardEntity.isPresent()){
             BoardEntity boardEntity = optionalBoardEntity.get();
-            CommentEntity commentEntity = CommentEntity.toSaveEntity(commentDTO, boardEntity);
+            CommentEntity commentEntity = CommentEntity.toSaveEntity(request, boardEntity);
             commentRepository.save(commentEntity);
         }
     }
