@@ -33,5 +33,9 @@ public class CommentApiController {
         return ApiResponse.ok();
     }
 
-
+    @PostMapping("/{boardId}/{id}")
+    public ApiResponse<String> commentAdd(@RequestBody CommentRequest request){
+        commentService.addComment(request);
+        return ApiResponse.ok();
+    }
 }
