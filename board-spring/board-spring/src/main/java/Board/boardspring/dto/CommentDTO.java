@@ -1,6 +1,6 @@
 package Board.boardspring.dto;
 
-import Board.boardspring.entity.CommentEntity;
+import Board.boardspring.entity.Comment;
 import lombok.*;
 
 import java.util.List;
@@ -25,18 +25,18 @@ public class CommentDTO {
         this.commentContents = commentContents;
     }
 
-    public static List<CommentDTO> fromList(List<CommentEntity> list) {
+    public static List<CommentDTO> fromList(List<Comment> list) {
         return list.stream()
                 .map(CommentDTO::from)
                 .collect(Collectors.toList());
     }
 
-    public static CommentDTO from(CommentEntity entity) {
+    public static CommentDTO from(Comment entity) {
         return CommentDTO.builder()
-                .commentContents(entity.getCommentContents())
-                .commentWriter(entity.getCommentWriter())
-                .commentId(entity.getCommentId())
-                .id(entity.getCommentId())
+                .commentContents(entity.getContents())
+                .commentWriter(entity.getWriter())
+//                .commentId(entity.getCommentId())
+//                .id(entity.getCommentId())
                 .boardId(entity.getBoardId())
                 .build();
     }

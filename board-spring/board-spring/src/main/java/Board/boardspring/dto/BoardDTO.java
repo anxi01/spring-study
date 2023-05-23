@@ -1,6 +1,6 @@
 package Board.boardspring.dto;
 
-import Board.boardspring.entity.BoardEntity;
+import Board.boardspring.entity.Board;
 import lombok.*;
 
 /** DTO(Data Transfer Object) : 데이터를 객체에게 전달 */
@@ -18,14 +18,14 @@ public class BoardDTO {
     private String boardContents;
     private int boardHits;
 
-    public static BoardDTO toBoardDTO(BoardEntity boardEntity){
+    public static BoardDTO toBoardDTO(Board board){
         BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setId(boardEntity.getId());
-        boardDTO.setBoardWriter(boardEntity.getBoardWriter());
-        boardDTO.setBoardPass(boardEntity.getBoardPass());
-        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
-        boardDTO.setBoardContents(boardEntity.getBoardContents());
-        boardDTO.setBoardHits(boardEntity.getBoardHits());
+        boardDTO.setId(board.getId());
+        boardDTO.setBoardWriter(board.getBoardWriter());
+        boardDTO.setBoardPass(board.getBoardPass());
+        boardDTO.setBoardTitle(board.getBoardTitle());
+        boardDTO.setBoardContents(board.getBoardContents());
+        boardDTO.setBoardHits(board.getBoardHits());
         return boardDTO;
     }
 }
