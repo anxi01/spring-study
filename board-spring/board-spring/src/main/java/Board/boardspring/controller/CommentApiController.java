@@ -3,6 +3,7 @@ package Board.boardspring.controller;
 import Board.boardspring.common.ApiResponse;
 import Board.boardspring.controller.reponse.CommentResponse;
 import Board.boardspring.controller.request.CommentRequest;
+import Board.boardspring.dto.BoardDTO;
 import Board.boardspring.dto.CommentDTO;
 import Board.boardspring.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,6 @@ public class CommentApiController {
     @PostMapping
     public ApiResponse<String> commentSave(@RequestBody CommentRequest request){
         commentService.save(request);
-        return ApiResponse.ok();
-    }
-
-    @PostMapping("/{boardId}/{id}")
-    public ApiResponse<String> commentAdd(@RequestBody CommentRequest request){
-        commentService.addComment(request);
         return ApiResponse.ok();
     }
 }

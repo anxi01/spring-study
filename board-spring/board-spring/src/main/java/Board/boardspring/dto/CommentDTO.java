@@ -12,13 +12,15 @@ public class CommentDTO {
     private Long id;
 
     private Long boardId;
+    private Long commentId;
     private String commentWriter;
     private String commentContents;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private CommentDTO(Long id, Long boardId, String commentWriter, String commentContents) {
+    private CommentDTO(Long id, Long boardId, Long commentId, String commentWriter, String commentContents) {
         this.id = id;
         this.boardId = boardId;
+        this.commentId = commentId;
         this.commentWriter = commentWriter;
         this.commentContents = commentContents;
     }
@@ -33,9 +35,9 @@ public class CommentDTO {
         return CommentDTO.builder()
                 .commentContents(entity.getCommentContents())
                 .commentWriter(entity.getCommentWriter())
-                .id(entity.getId())
+                .commentId(entity.getCommentId())
+                .id(entity.getCommentId())
                 .boardId(entity.getBoardId())
                 .build();
     }
-
 }

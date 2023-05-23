@@ -5,8 +5,10 @@ import Board.boardspring.dto.BoardDTO;
 import Board.boardspring.dto.CommentDTO;
 import Board.boardspring.entity.BoardEntity;
 import Board.boardspring.entity.CommentEntity;
+import Board.boardspring.entity.LowCommentEntity;
 import Board.boardspring.repository.BoardRepository;
 import Board.boardspring.repository.CommentRepository;
+import Board.boardspring.repository.LowCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
+    private final LowCommentRepository lowCommentRepository;
 
     public List<CommentDTO> findAll(Long boardId) {
         final List<CommentEntity> list = commentRepository.findAllByBoardId(boardId);
@@ -32,20 +35,11 @@ public class CommentService {
         final Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(request.getBoardId());
         if(optionalBoardEntity.isPresent()){
             BoardEntity boardEntity = optionalBoardEntity.get();
-            CommentEntity commentEntity = CommentEntity.toSaveEntity(request, boardEntity);
+            //CommentEntity commentEntity = CommentEntity.toSaveEntity(request, boardEntity);
+            CommentEntity commentEntity = new CommentEntity();
+            LowCommentEntity lowCommentEntity = LowCommentEntity.toAddEntity(request, commentEntity);
+            commentEntity = CommentEntity.toSaveEntity(lowCommentEntity, boardEntity);
             commentRepository.save(commentEntity);
-        }
-    }
-
-    public void addComment(CommentRequest request){
-        final Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(request.getBoardId());
-        if(optionalBoardEntity.isPresent()){
-            BoardEntity boardEntity = optionalBoardEntity.get();
-            Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(request.getId());
-            if(optionalCommentEntity.isPresent()){
-                CommentEntity commentEntity = optionalCommentEntity.get();
-                commentRepository.save(commentEntity);
-            }
         }
     }
 }

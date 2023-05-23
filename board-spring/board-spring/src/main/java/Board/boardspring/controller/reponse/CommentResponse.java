@@ -13,13 +13,15 @@ public class CommentResponse {
 
     private Long id;
     private Long boardId;
+    private Long commentId;
     private String commentWriter;
     private String commentContents;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private CommentResponse(Long id, Long boardId, String commentWriter, String commentContents) {
+    private CommentResponse(Long id, Long boardId, Long commentId, String commentWriter, String commentContents) {
         this.id = id;
         this.boardId = boardId;
+        this.commentId = commentId;
         this.commentWriter = commentWriter;
         this.commentContents = commentContents;
     }
@@ -34,6 +36,7 @@ public class CommentResponse {
         return CommentResponse.builder()
                 .commentContents(entity.getCommentContents())
                 .commentWriter(entity.getCommentWriter())
+                .commentId(entity.getCommentId())
                 .id(entity.getId())
                 .boardId(entity.getBoardId())
                 .build();

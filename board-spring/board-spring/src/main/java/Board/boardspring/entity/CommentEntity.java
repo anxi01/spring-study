@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -14,7 +17,7 @@ public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long commentId;
 
     @Column(length = 20, nullable = false)
     private String commentWriter;
@@ -22,20 +25,21 @@ public class CommentEntity {
     @Column(length = 500)
     private String commentContents;
 
-
     // board : comment = 1 : N 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boardEntityiId")
+    @JoinColumn(name = "boardId")
     private BoardEntity boardEntity;
 
-    @Column(name = "boardEntityiId", insertable = false, updatable = false)
+    @Column(name = "boardId", insertable = false, updatable = false)
     private Long boardId;
 
+    @OneToMany(mappedBy = "commentEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<LowCommentEntity> lowCommentEntityList = new ArrayList<>();
 
-    public static CommentEntity toSaveEntity(CommentRequest request, BoardEntity boardEntity) {
+    public static CommentEntity toSaveEntity(LowCommentEntity lowCommentEntity, BoardEntity boardEntity) {
         CommentEntity commentEntity = new CommentEntity();
-        commentEntity.setCommentWriter(request.getCommentWriter());
-        commentEntity.setCommentContents(request.getCommentContents());
+        commentEntity.setCommentWriter(lowCommentEntity.getCommentWriter());
+        commentEntity.setCommentContents(lowCommentEntity.getCommentContents());
         commentEntity.setBoardEntity(boardEntity);
         return commentEntity;
     }
