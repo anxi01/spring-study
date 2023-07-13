@@ -17,7 +17,7 @@ public class ParameterAop {
     @Pointcut("execution(* com.example.aop.controller..*.*(..))") // controller 패키지 하위 클래스에 모두 적용하겠다.
     private void cut(){}
 
-    @Before("cut()")  // cut 메소드 실행 전 시행
+    //@Before("cut()")  // cut 메소드 실행 전 시행
     public void before(JoinPoint joinPoint){
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
@@ -31,7 +31,7 @@ public class ParameterAop {
         }
     }
 
-    @AfterReturning(value = "cut()", returning = "returnObj") // cut 메소드 실행 후 시행
+    //@AfterReturning(value = "cut()", returning = "returnObj") // cut 메소드 실행 후 시행
     public void afterReturn(JoinPoint joinPoint, Object returnObj){
         System.out.println("return obj");
         System.out.println(returnObj);
