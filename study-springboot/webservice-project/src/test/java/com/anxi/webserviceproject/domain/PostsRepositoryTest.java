@@ -19,17 +19,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PostsRepositoryTest {
 
     @Autowired
-    private PostsRepository postsRepository;
+    PostsRepository postsRepository;
 
     @AfterEach
-    public void cleanup(){
+    public void cleanup() {
         postsRepository.deleteAll();
     }
 
     @Test
-    public void saveTest(){
-
-        // given
+    public void 게시글저장_불러오기() {
+        //given
         String title = "테스트 게시글";
         String content = "테스트 본문";
 
@@ -38,33 +37,32 @@ public class PostsRepositoryTest {
                 .content(content)
                 .author("author")
                 .build());
-        // when
+
+        //when
         List<Posts> postsList = postsRepository.findAll();
 
-        // then
+        //then
         Posts posts = postsList.get(0);
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getContent()).isEqualTo(content);
     }
 
     @Test
-    public void BaseTimeEntity_등록(){
-
-        // given
+    public void BaseTimeEntity_등록() {
+        //given
         LocalDateTime now = LocalDateTime.now();
         postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
                 .author("author")
                 .build());
-
-        // when
+        //when
         List<Posts> postsList = postsRepository.findAll();
 
-        // then
+        //then
         Posts posts = postsList.get(0);
 
-        System.out.println(">>>>>>> createTime = " + posts.getCreatedDate() + " modifiedDate = " + posts.getModifiedDate());
+        System.out.println(">>>>>>>>> createDate=" + posts.getCreatedDate() + ", modifiedDate=" + posts.getModifiedDate());
 
         assertThat(posts.getCreatedDate()).isAfter(now);
         assertThat(posts.getModifiedDate()).isAfter(now);

@@ -1,0 +1,12 @@
+com/anxi/webserviceproject/web/PostsApiControllerTest.java
+ com.anxi.webserviceproject.web.PostsApiControllerTest
+com/anxi/webserviceproject/web/IndexControllerTest.java
+ com.anxi.webserviceproject.web.IndexControllerTest
+com/anxi/webserviceproject/web/dto/HelloResponseDtoTest.java
+ com.anxi.webserviceproject.web.dto.HelloResponseDtoTest
+com/anxi/webserviceproject/domain/PostsRepositoryTest.java
+ com.anxi.webserviceproject.domain.PostsRepositoryTest
+com/anxi/webserviceproject/WebserviceProjectApplicationTests.java
+ com.anxi.webserviceproject.WebserviceProjectApplicationTests
+com/anxi/webserviceproject/web/HelloControllerTest.java
+ com.anxi.webserviceproject.web.HelloControllerTest
