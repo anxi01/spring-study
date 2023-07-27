@@ -1,5 +1,10 @@
 com/anxi/webserviceproject/domain/BaseTimeEntity.java
  com.anxi.webserviceproject.domain.BaseTimeEntity
+com/anxi/webserviceproject/config/auth/SecurityConfig.java
+ com.anxi.webserviceproject.config.auth.SecurityConfig
+com/anxi/webserviceproject/config/auth/dto/OAuthAttributes.java
+ com.anxi.webserviceproject.config.auth.dto.OAuthAttributes
+ com.anxi.webserviceproject.config.auth.dto.OAuthAttributes$OAuthAttributesBuilder
 com/anxi/webserviceproject/web/HelloController.java
  com.anxi.webserviceproject.web.HelloController
 com/anxi/webserviceproject/domain/posts/PostsRepository.java
@@ -8,29 +13,41 @@ com/anxi/webserviceproject/web/dto/PostsResponseDto.java
  com.anxi.webserviceproject.web.dto.PostsResponseDto
 com/anxi/webserviceproject/domain/user/Role.java
  com.anxi.webserviceproject.domain.user.Role
+com/anxi/webserviceproject/config/WebConfig.java
+ com.anxi.webserviceproject.config.WebConfig
 com/anxi/webserviceproject/web/dto/PostsListResponseDto.java
  com.anxi.webserviceproject.web.dto.PostsListResponseDto
 com/anxi/webserviceproject/domain/user/UserRepository.java
  com.anxi.webserviceproject.domain.user.UserRepository
-com/anxi/webserviceproject/domain/posts/Posts.java
- com.anxi.webserviceproject.domain.posts.Posts
- com.anxi.webserviceproject.domain.posts.Posts$PostsBuilder
+com/anxi/webserviceproject/config/auth/dto/SessionUser.java
+ com.anxi.webserviceproject.config.auth.dto.SessionUser
 com/anxi/webserviceproject/domain/user/User.java
  com.anxi.webserviceproject.domain.user.User
  com.anxi.webserviceproject.domain.user.User$UserBuilder
+com/anxi/webserviceproject/domain/posts/Posts.java
+ com.anxi.webserviceproject.domain.posts.Posts
+ com.anxi.webserviceproject.domain.posts.Posts$PostsBuilder
 com/anxi/webserviceproject/web/dto/HelloResponseDto.java
  com.anxi.webserviceproject.web.dto.HelloResponseDto
 com/anxi/webserviceproject/web/PostsApiController.java
  com.anxi.webserviceproject.web.PostsApiController
+com/anxi/webserviceproject/config/auth/LoginUserArgumentResolver.java
+ com.anxi.webserviceproject.config.auth.LoginUserArgumentResolver
+com/anxi/webserviceproject/config/auth/LoginUser.java
+ com.anxi.webserviceproject.config.auth.LoginUser
 com/anxi/webserviceproject/web/IndexController.java
  com.anxi.webserviceproject.web.IndexController
 com/anxi/webserviceproject/web/dto/PostsSaveRequestDto.java
  com.anxi.webserviceproject.web.dto.PostsSaveRequestDto
  com.anxi.webserviceproject.web.dto.PostsSaveRequestDto$PostsSaveRequestDtoBuilder
+com/anxi/webserviceproject/config/auth/CustomOAuth2UserService.java
+ com.anxi.webserviceproject.config.auth.CustomOAuth2UserService
 com/anxi/webserviceproject/service/posts/PostsService.java
  com.anxi.webserviceproject.service.posts.PostsService
 com/anxi/webserviceproject/web/dto/PostsUpdateRequestDto.java
  com.anxi.webserviceproject.web.dto.PostsUpdateRequestDto
  com.anxi.webserviceproject.web.dto.PostsUpdateRequestDto$PostsUpdateRequestDtoBuilder
+com/anxi/webserviceproject/config/JpaConfig.java
+ com.anxi.webserviceproject.config.JpaConfig
 com/anxi/webserviceproject/WebserviceProjectApplication.java
  com.anxi.webserviceproject.WebserviceProjectApplication
