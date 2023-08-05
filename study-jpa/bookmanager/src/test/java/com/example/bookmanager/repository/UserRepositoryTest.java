@@ -68,6 +68,7 @@ class UserRepositoryTest {
          * userRepository.deleteAll(userRepository.findAllById(Lists.newArrayList(1L, 3L)));
          */
 
+
         /**
          * // 대용량 삭제시 deleteInBatch를 사용한다. -> delete 쿼리를 단 한번만 실행한다.
          * userRepository.deleteInBatch(userRepository.findAllById(Lists.newArrayList(1L, 3L)));
@@ -75,7 +76,7 @@ class UserRepositoryTest {
          */
 
         /**
-         * // 페이징
+         * // 페이징 : 게시판의 페이지 수
          * Page<User> users = userRepository.findAll(PageRequest.of(1, 3));  // page는 0부터 시작 -> 0,1 총 2장 -> 2번째 장을 보여줌
          * System.out.println("page : " + users); // 5개의 user가 있으니 총 2장 -> 1page : 3users, 2page : 2users
          * System.out.println("totalElements : " + users.getTotalElements());
@@ -96,11 +97,31 @@ class UserRepositoryTest {
         userRepository.findAll(example).forEach(System.out::println);
          */
 
-        userRepository.save(new User("david", "david@fastcampus.com"));
-        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
-        user.setEmail("david-updated@fastcampus.com");
+        /**
+         // Update
+         * userRepository.save(new User("david", "david@fastcampus.com"));
+         * User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+         * user.setEmail("david-updated@fastcampus.com");
+         *
+         * userRepository.save(user);
+         */
 
-        userRepository.save(user);
     }
+    @Test
+    void select(){
+        System.out.println(userRepository.findByName("dennis"));
+        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fastcampus.com"));
+        System.out.println("getByEmail : " + userRepository.getByEmail("martin@fastcampus.com"));
+        System.out.println("readByEmail : " + userRepository.readByEmail("martin@fastcampus.com"));
+        System.out.println("searchByEmail : " + userRepository.searchByEmail("martin@fastcampus.com"));
+        System.out.println("queryByEmail : " + userRepository.queryByEmail("martin@fastcampus.com"));
+        System.out.println("streamByEmail : " + userRepository.streamByEmail("martin@fastcampus.com"));
+        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("martin@fastcampus.com"));
 
+        System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("martin"));
+        System.out.println("findTop1ByName : " + userRepository.findTop1ByName("martin"));
+
+        System.out.println("findFirst2ByName : " + userRepository.findFirst2ByName("martin"));
+        System.out.println("findTop2ByName : " + userRepository.findTop2ByName("martin"));
+    }
 }
