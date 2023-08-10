@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +78,7 @@ class UserRepositoryTest {
 
         /**
          * // 페이징 : 게시판의 페이지 수
-         * Page<User> users = userRepository.findAll(PageRequest.of(1, 3));  // page는 0부터 시작 -> 0,1 총 2장 -> 2번째 장을 보여줌
+         Page<User> users = userRepository.findAll(PageRequest.of(1, 3));  // page는 0부터 시작 -> 0,1 총 2장 -> 2번째 장을 보여줌
          * System.out.println("page : " + users); // 5개의 user가 있으니 총 2장 -> 1page : 3users, 2page : 2users
          * System.out.println("totalElements : " + users.getTotalElements());
          * System.out.println("totalPages : " + users.getTotalPages());
@@ -89,11 +90,11 @@ class UserRepositoryTest {
          */
 
         /**
-        // QueryByExample
+        // QueryByExample : QBE
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("name") // 이름은 무시하겠다.
                 .withMatcher("email", endsWith()); // email만 매칭시키겠다.
-        Example<User> example = Example.of(new User("ma", "fastcampus.com"), matcher);
+        Example<User> example = Example.of(new User("martin", "fastcampus.com"), matcher);
         userRepository.findAll(example).forEach(System.out::println);
          */
 
@@ -109,6 +110,7 @@ class UserRepositoryTest {
     }
     @Test
     void select(){
+        /*
         System.out.println(userRepository.findByName("dennis"));
         System.out.println("findByEmail : " + userRepository.findByEmail("martin@fastcampus.com"));
         System.out.println("getByEmail : " + userRepository.getByEmail("martin@fastcampus.com"));
@@ -123,5 +125,39 @@ class UserRepositoryTest {
 
         System.out.println("findFirst2ByName : " + userRepository.findFirst2ByName("martin"));
         System.out.println("findTop2ByName : " + userRepository.findTop2ByName("martin"));
+        */
+
+        // And Or
+        System.out.println("findByEmailAndName : " + userRepository.findByEmailAndName("martin@fastcampus.com", "martin"));
+        System.out.println("findByEmailOrName : " + userRepository.findByEmailOrName("martin@fastcampus.com", "dennis"));
+
+        // After : 특정 param 보다 큰 것 -> 보통 날짜나 시간에 사용  (반대는 Before)
+        System.out.println("findByCreatedAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdAfter : " + userRepository.findByIdAfter(4L));
+
+        // After과 기능은 같지만 범용적으로 넓게 사용 가능(또한 등호 사용 가능)
+        System.out.println("findByCreatedAtGreaterThan : " + userRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
+
+        // Between (양 끝 숫자를 포함)
+        System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
+        System.out.println("findByIdBetween : " + userRepository.findByIdBetween(2L, 4L)); // 2, 3, 4
+        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(2L, 4L)); // 2, 3, 4
+
+        // IsNotNull, IsNotEmpty
+        System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
+        // System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty()); // IsEmpty / IsNotEmpty can only be used on collection properties!
+
+        // In
+        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("martin", "dennis")));
+
+        // Starting, Ending, contains
+        System.out.println("findByNameLike : " + userRepository.findByNameLike("%art%")); // mar% / %tin
+
+        System.out.println("findByNameStartingWith : " + userRepository.findByNameStartingWith("mar")); // 처음
+        System.out.println("findByNameEndingWith : " + userRepository.findByNameEndingWith("tin")); // 끝
+        System.out.println("findByNameContains : " + userRepository.findByNameContains("art")); // 중간
+
+
     }
 }

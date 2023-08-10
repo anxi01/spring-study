@@ -3,8 +3,10 @@ package com.example.bookmanager.repository;
 import com.example.bookmanager.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -31,4 +33,33 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findTop2ByName(String name);
 
     // User findLast1ByName(String name); 오류 발생
+
+    List<User> findByEmailAndName(String email, String name);
+    List<User> findByEmailOrName(String email, String name);
+
+    List<User> findByCreatedAtAfter(LocalDateTime yesterday);
+    List<User> findByIdAfter(Long id);
+
+    List<User> findByCreatedAtGreaterThan(LocalDateTime yesterday);
+    List<User> findByCreatedAtGreaterThanEqual(LocalDateTime yesterday);
+
+    List<User> findByCreatedAtBetween(LocalDateTime yesterday, LocalDateTime tomorrow);
+    List<User> findByIdBetween(Long id1, Long id2);
+    List<User> findByIdGreaterThanEqualAndIdLessThanEqual(Long id1, Long id2);
+
+    List<User> findByIdIsNotNull(); // 반대는 IsNull
+    //List<User> findByAddressIsNotEmpty();
+
+    List<User> findByNameIn(List<String> names);
+
+    List<User> findByNameStartingWith(String name);
+    List<User> findByNameEndingWith(String name);
+    List<User> findByNameContains(String name);
+    List<User> findByNameLike(String name);
+
+    // Is = Equals = " "
+    Set<User> findUserByNameIs(String name);
+    Set<User> findUserByName(String name);
+    Set<User> findUserByNameEquals(String name);
+
 }
