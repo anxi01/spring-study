@@ -1,19 +1,13 @@
 package com.example.bookmanager.repository;
 
-import com.example.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.*;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -157,6 +151,23 @@ class UserRepositoryTest {
         System.out.println("findByNameStartingWith : " + userRepository.findByNameStartingWith("mar")); // 처음
         System.out.println("findByNameEndingWith : " + userRepository.findByNameEndingWith("tin")); // 끝
         System.out.println("findByNameContains : " + userRepository.findByNameContains("art")); // 중간
+    }
+    @Test
+    void pagingAndSortingTest(){
+        // 정렬
+
+        System.out.println("findTop1ByName : " + userRepository.findTop1ByName("martin"));
+        // findLast1ByName(String name) 오류 해결 + Top1 == Top
+        System.out.println("findTop1ByNameOrderByIdDesc : " + userRepository.findTop1ByNameOrderByIdDesc("martin"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("martin"));
+        System.out.println("findFirstByNameWithSortParams : "
+                + userRepository.findFirstByName("martin", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+
+        // 페이징
+        System.out.println("findByNameWithPaging : " +
+                userRepository.findByName("martin", PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")))).getContent());
+        System.out.println("findByNameWithPaging : " +
+                userRepository.findByName("martin", PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")))).getTotalElements());
 
 
     }
