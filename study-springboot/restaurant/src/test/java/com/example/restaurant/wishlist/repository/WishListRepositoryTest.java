@@ -1,5 +1,6 @@
 package com.example.restaurant.wishlist.repository;
 
+import com.example.restaurant.wishlist.WishListRepository;
 import com.example.restaurant.wishlist.entity.WishListEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class WishListRepositoryTest {
         var update = wishListRepository.save(expected);
 
         assertThat(update.getTitle()).isEqualTo(expected.getTitle());
-        assertThat(wishListRepository.listAll().size()).isEqualTo(1);
+        assertThat(wishListRepository.findAll().size()).isEqualTo(1);
 
     }
 
@@ -65,7 +66,7 @@ public class WishListRepositoryTest {
 
         wishListRepository.deleteById(1);
 
-        int count = wishListRepository.listAll().size();
+        int count = wishListRepository.findAll().size();
         assertThat(count).isEqualTo(0);
     }
     @Test
@@ -77,7 +78,7 @@ public class WishListRepositoryTest {
         var wishListEntity2 = create();
         wishListRepository.save(wishListEntity2);
 
-        int count = wishListRepository.listAll().size();
+        int count = wishListRepository.findAll().size();
         assertThat(count).isEqualTo(2);
     }
 }
