@@ -9,6 +9,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/get-api")
 public class GetController {
 
+    // @GetMapping() 이전 방법
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String getHello(){
         return "Hello World";
