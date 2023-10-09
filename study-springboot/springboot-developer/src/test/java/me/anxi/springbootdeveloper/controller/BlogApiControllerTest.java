@@ -1,8 +1,10 @@
 package me.anxi.springbootdeveloper.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.anxi.springbootdeveloper.domain.Article;
 import me.anxi.springbootdeveloper.dto.AddArticleRequest;
+import me.anxi.springbootdeveloper.dto.UpdateArticleRequest;
 import me.anxi.springbootdeveloper.repository.BlogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -121,5 +123,62 @@ class BlogApiControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(title))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content").value(content));
 
+    }
+
+    @DisplayName("deleteArticle: 블로그 글 삭제에 성공한다.")
+    @Test
+    public void deleteArticle() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "title";
+        final String content = "content";
+
+        Article savedArticle = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        // when
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders.delete(url, savedArticle.getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // then
+        List<Article> articles = blogRepository.findAll();
+
+        assertThat(articles).isEmpty();
+    }
+
+    @DisplayName("updateArticle: 블로그 글 수정에 성공한다.")
+    @Test
+    public void updateArticle() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "title";
+        final String content = "content";
+
+        // 기존거 저장 후
+        Article savedArticle = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        final String newTitle = "new title";
+        final String newContent = "new content";
+
+        // 새로운 업데이트 요청 받음
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+
+        // when (업데이트 내용을 body로 담아서 post)
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders.put(url, savedArticle.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        result.andExpect(MockMvcResultMatchers.status().isOk());
+
+        Article article = blogRepository.findById(savedArticle.getId()).get();
+
+        assertThat(article.getTitle()).isEqualTo(newTitle);
+        assertThat(article.getContent()).isEqualTo(newContent);
     }
 }
