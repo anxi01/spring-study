@@ -17,10 +17,11 @@ import java.util.List;
 @Data
 @Builder
 @Entity // pk 필요
+@Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
 
     @Id
-    @GeneratedValue//자동으로 증가
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 증가
     private Long id;
     
     @NonNull
@@ -29,10 +30,21 @@ public class User {
     @NonNull
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
+
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(insertable = false)
     private LocalDateTime updatedAt;
 
-    //@OneToMany(fetch = FetchType.EAGER)
-    //private List<Address> address;
+    /*
+    @Transient // 영속성 처리 제외 -> DB 데이터에 반영 X
+    private String testData;
+     */
+    /*@OneToMany(fetch = FetchType.EAGER)
+    private List<Address> address;*/
+
 
 }

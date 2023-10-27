@@ -1,5 +1,7 @@
 package com.example.bookmanager.repository;
 
+import com.example.bookmanager.domain.Gender;
+import com.example.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,7 +170,28 @@ class UserRepositoryTest {
                 userRepository.findByName("martin", PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")))).getContent());
         System.out.println("findByNameWithPaging : " +
                 userRepository.findByName("martin", PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")))).getTotalElements());
+    }
 
+    @Test
+    void insertAndUpdateTest(){
 
+        User user = new User("martin", "martin2@naver.com");
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrrrrrrrr");
+
+        userRepository.save(user2);
+    }
+
+    @Test
+    void enumTest(){
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+        userRepository.findAll().forEach(System.out::println);
+
+        System.out.println(userRepository.findRawRecord().get("gender"));
     }
 }
