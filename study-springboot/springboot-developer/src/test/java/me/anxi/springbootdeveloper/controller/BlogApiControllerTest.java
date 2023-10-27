@@ -65,7 +65,6 @@ class BlogApiControllerTest {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody));
-
         // then
         result.andExpect(MockMvcResultMatchers.status().isCreated());
 
