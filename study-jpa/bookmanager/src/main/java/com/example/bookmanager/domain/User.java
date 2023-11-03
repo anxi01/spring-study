@@ -1,24 +1,24 @@
 package com.example.bookmanager.domain;
 
 
+import com.example.bookmanager.domain.listener.Auditable;
+import com.example.bookmanager.domain.listener.UserEntityListener;
 import lombok.*;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)  // jpa에서는 NoArgsConstructor 무조건 필요
+@NoArgsConstructor// (force = true, access = AccessLevel.PROTECTED)  // jpa에서는 NoArgsConstructor 무조건 필요
 @AllArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity // pk 필요
-@Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-public class User {
+@EntityListeners(value = UserEntityListener.class )
+//@Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+public class User extends BaseEntity implements Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 증가
@@ -33,18 +33,27 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-    @Column(updatable = false)
+    /*@Column(updatable = false)
+    @CreatedDate // 자동으로 시간 값을 지정
     private LocalDateTime createdAt;
 
-    @Column(insertable = false)
-    private LocalDateTime updatedAt;
+    @Column
+    @LastModifiedDate // 자동으로 시간 값을 지정
+    private LocalDateTime updatedAt;*/
 
-    /*
-    @Transient // 영속성 처리 제외 -> DB 데이터에 반영 X
-    private String testData;
-     */
-    /*@OneToMany(fetch = FetchType.EAGER)
+/*    @Transient // 영속성 처리 제외 -> DB 데이터에 반영 X
+    private String testData;*/
+
+/*    @OneToMany(fetch = FetchType.EAGER)
     private List<Address> address;*/
 
-
+    /*@PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt = LocalDateTime.now();
+    }*/
 }
