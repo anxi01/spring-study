@@ -1,48 +1,33 @@
 package com.example.bookmanager.domain;
 
-import com.example.bookmanager.domain.listener.Auditable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-//@EntityListeners(value = AuditingEntityListener.class)
-public class Book extends BaseEntity implements Auditable {
+public class Book extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본은 auto
     private Long id;
 
     private String name;
 
-    private String author;
+    private String category;
 
-//    @CreatedDate
-//    private LocalDateTime createdAt;
-//
-//    @LastModifiedDate
-//    private LocalDateTime updatedAt;
+    private Long authorId;
 
-    /*@PrePersist
-    void prePersist(){
-        this.createdAt = LocalDateTime.now();
-        this.updateAt = LocalDateTime.now();
-    }
+    private Long publisherId;
 
-    @PreUpdate
-    void preUpdate(){
-        this.updateAt = LocalDateTime.now();
-    }*/
+    @OneToOne(mappedBy = "book") // mappedBy를 통해 Book에는 BookReviewInfo의 FK가 존재하지 않는다.
+    @ToString.Exclude // ToString 순환 참조가 발생하기 때문에 배제해준다.
+    private BookReviewInfo bookReviewInfo;
 }
 
