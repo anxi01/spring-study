@@ -2,6 +2,7 @@ package com.example.bookmanager.repository;
 
 import com.example.bookmanager.domain.Gender;
 import com.example.bookmanager.domain.User;
+import com.example.bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -253,5 +255,30 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void userRelationTest() {
+        User user = new User();
+        user.setName("anxi");
+        user.setEmail("anxi@com");
+        user.setGender(Gender.MALE);
+        userRepository.save(user);
+
+        // 2번의 Update
+        user.setName("daniel");
+        userRepository.save(user);
+
+        user.setEmail("daniel@com");
+        userRepository.save(user);
+
+//        List<UserHistory> result = userHistoryRepository.findByUserId(
+//                userRepository.findByEmail("daniel@com").getId()
+//        );
+
+        // 연관관계 매핑을 통해 위 코드를 아래와 같이 바꿀 수 있음
+        List<UserHistory> result = userRepository.findByEmail("daniel@com").getUserHistories();
+
+        result.forEach(System.out::println);
     }
 }

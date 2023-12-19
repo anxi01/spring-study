@@ -8,6 +8,8 @@ import com.example.bookmanager.support.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -17,8 +19,8 @@ public class UserEntityListener {
     //@Autowired
     //private UserHistoryRepository userHistoryRepository;
 
-    @PrePersist
-    @PreUpdate
+    @PostPersist // PrePersist일 경우, userId가 저장돼있지 않아 null값 발생
+    @PostUpdate
     public void prePersistAndPreUpdate(Object o){
 
         // Bean을 @Component해서 주입하는 것이 아닌 BeanUtils에서 Bean을 가져온다.
