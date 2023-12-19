@@ -12,20 +12,22 @@ import javax.persistence.*;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserHistory extends BaseEntity {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @ManyToOne을 사용해 필요 없어짐
-//    @Column(name = "user_id", insertable = false, updatable = false)
-//    private Long userId;
+    private String title;
 
-    private String name;
+    private String content;
 
-    private String email;
+    private float score;
 
+    // Review 엔티티에 userId와 bookId 존재
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Book book;
 }

@@ -38,8 +38,13 @@ public class User extends BaseEntity {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     // 엔티티가 어떤 컬럼으로 조인을 하게 될지 지정해주는 어노테이션
     // User 엔티티에서 UserHistory를 저장하거나 수정하지 못하게 함
-
+    @ToString.Exclude
     private List<UserHistory> userHistories = new ArrayList<>();
     // Persist하기 전에 userHistories는 null이기 때문에 NullPointerException 발생 가능
     // 따라서 new ArrayList<>(); 생성해음
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 }

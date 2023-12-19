@@ -36,7 +36,6 @@ class BookReviewInfoRepositoryTest {
         Book book = new Book();
         book.setName("우동한그릇");
         book.setAuthorId(1L);
-        book.setPublisherId(1L);
 
         return bookRepository.save(book);
     }

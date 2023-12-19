@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,10 +26,17 @@ public class Book extends BaseEntity {
 
     private Long authorId;
 
-    private Long publisherId;
-
     @OneToOne(mappedBy = "book") // mappedBy를 통해 Book에는 BookReviewInfo의 FK가 존재하지 않는다.
     @ToString.Exclude // ToString 순환 참조가 발생하기 때문에 배제해준다.
     private BookReviewInfo bookReviewInfo;
+
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
+
+    @ManyToOne
+    @ToString.Exclude
+    private Publisher publisher;
 }
 
