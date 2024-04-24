@@ -1,6 +1,7 @@
 package com.example.bookmanager.domain;
 
 import com.example.bookmanager.domain.listener.Auditable;
+import javax.persistence.Column;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +16,10 @@ import java.time.LocalDateTime;
 @EntityListeners(value = AuditingEntityListener.class)
 public class BaseEntity implements Auditable {
     @CreatedDate
+    @Column(columnDefinition = "datetime(6) default now(6)", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
     @LastModifiedDate
+    @Column(columnDefinition = "datetime(6) default now(6)", nullable = false)
     private LocalDateTime updatedAt;
 }
