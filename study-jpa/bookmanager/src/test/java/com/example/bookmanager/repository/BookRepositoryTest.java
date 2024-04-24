@@ -4,6 +4,8 @@ import com.example.bookmanager.domain.Book;
 import com.example.bookmanager.domain.Publisher;
 import com.example.bookmanager.domain.Review;
 import com.example.bookmanager.domain.User;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -75,5 +77,39 @@ public class BookRepositoryTest {
         publisher.setName("패스트캠퍼스");
 
         return publisherRepository.save(publisher);
+    }
+
+    @Test
+    void queryTest() {
+//        bookRepository.findAll().forEach(System.out::println);
+//
+//        System.out.println(
+//            "findByCategoryIsNullAndNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual() : "
+//                + bookRepository.findByCategoryIsNullAndNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual(
+//                "우동한그릇",
+//                LocalDateTime.now().minusDays(1L), LocalDateTime.now().minusDays(1L)));
+
+        System.out.println("findByNameRecently() : " + bookRepository.findByNameRecently("우동한그릇",
+            LocalDateTime.now().minusDays(1L), LocalDateTime.now().minusDays(1L)));
+    }
+
+    @Test
+    void nativeQueryTest() {
+//        bookRepository.findAll().forEach(System.out::println);
+//        bookRepository.findAllCustom().forEach(System.out::println);
+
+        List<Book> books = bookRepository.findAll();
+
+        for (Book book : books) {
+            book.setCategory("IT전문서");
+        }
+
+        bookRepository.saveAll(books);
+
+        System.out.println(bookRepository.findAll());
+
+        System.out.println("affectedRows : " + bookRepository.updateCategories());
+
+        System.out.println(bookRepository.findAllCustom());
     }
 }
