@@ -3,6 +3,7 @@ package com.example.bookmanager.repository;
 import com.example.bookmanager.domain.Book;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -28,4 +29,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
   @Modifying
   @Query(value = "update book set category = 'IT전문서'", nativeQuery = true)
   int updateCategories();
+
+  @Query(value = "select * from book order by id desc limit 1", nativeQuery = true)
+  Map<String, Object> findRawRecord();
 }
